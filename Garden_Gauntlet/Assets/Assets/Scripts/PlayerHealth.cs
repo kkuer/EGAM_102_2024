@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
@@ -11,6 +12,7 @@ public class PlayerHealth : MonoBehaviour
 
     public GameObject gameOver;
     public GameObject restartButton;
+    public GameObject panel;
 
     public int healthCount;
 
@@ -36,6 +38,8 @@ public class PlayerHealth : MonoBehaviour
             healthOne.enabled = false;
             gameOver.SetActive(true);
             restartButton.SetActive(true);
+            panel.SetActive(true);
+
             Time.timeScale = 0;
         }
     }

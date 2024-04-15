@@ -4,39 +4,20 @@ using UnityEngine;
 
 public class FrogBehavior : MonoBehaviour
 {
-    public bool isOverBucket;
-    public GameObject bucket;
+    //public bool isOverBucket;
+    //public GameObject bucket;
+
+    public Transform moveHandles;
 
     // Start is called before the first frame update
     void Start()
     {
-        isOverBucket = false;
+        //isOverBucket = false;
     }
 
     // Update is called once per frame
     void Update()
     {
         
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Bucket"))
-        {
-            isOverBucket = true;
-        }
-        else
-        {
-            isOverBucket = false;
-        }
-        
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Bucket"))
-        {
-            isOverBucket = false;
-        }
     }
 }

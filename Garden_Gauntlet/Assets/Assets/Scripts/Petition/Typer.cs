@@ -19,6 +19,7 @@ public class Typer : MonoBehaviour
 
     public GameObject winScreen;
     public GameObject restartButton;
+    public GameObject panel;
 
     // (script referenced from youtube tutorial: https://www.youtube.com/watch?v=j98a_X9G1fM)
 
@@ -49,10 +50,11 @@ public class Typer : MonoBehaviour
             CheckInput();
         }
 
-        if (nameCount == 10)
+        if (nameCount == 15)
         {
             winScreen.SetActive(true);
             restartButton.SetActive(true);
+            panel.SetActive(true);
             Time.timeScale = 0;
         }
     }

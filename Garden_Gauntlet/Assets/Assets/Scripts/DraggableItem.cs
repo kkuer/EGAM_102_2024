@@ -15,6 +15,8 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     [HideInInspector] public Transform parentAfterDrag;
 
+    public Transform moveHandles;
+
     public void OnBeginDrag(PointerEventData eventData)
     {
         //Debug.Log("Begin Drag");

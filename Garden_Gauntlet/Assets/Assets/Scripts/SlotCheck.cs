@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class SlotCheck : MonoBehaviour
 {
+    public FlowerPanelSlot slot;
+
     public Color CheckSlotContents()
     {
         return GetComponentInChildren<DraggableItem>().color;

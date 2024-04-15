@@ -1,10 +1,10 @@
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 using UnityEngine.UI;
 using Unity.VisualScripting;
 using System.Collections;
+using TMPro;
 
 public class FlowerMiniGame : MonoBehaviour
 {
@@ -28,6 +28,10 @@ public class FlowerMiniGame : MonoBehaviour
     public GameObject flower2;
     public GameObject flower3;
 
+    // timers
+    public TMP_Text startTimer;
+    public GameObject startTimerObject;
+
     // for changing the colors of the flowers that show up at start
     public Image flower1Image;
     public Image flower2Image;
@@ -47,7 +51,7 @@ public class FlowerMiniGame : MonoBehaviour
 
     private List<Color> originalColors = new List<Color>()
     {
-        Color.magenta, Color.cyan, Color.blue
+        Color.red, Color.green, Color.blue
     };
 
     private List<Color> workingColors = new List<Color>();
@@ -58,6 +62,9 @@ public class FlowerMiniGame : MonoBehaviour
 
     private void OnEnable()
     {
+        missionControl.fountainPaused = true;
+        missionControl.pipesPaused = true;
+
         // reset all variables
         workingColors.AddRange(originalColors);
         //colorList.AddRange(workingColors);
@@ -67,6 +74,7 @@ public class FlowerMiniGame : MonoBehaviour
         flower1.SetActive(false);
         flower2.SetActive(false);
         flower3.SetActive(false);
+        startTimerObject.SetActive(false);
 
         // show flower order briefly (like 3 seconds)
         startCoroutine = StartCoroutine(StartMinigame());
@@ -86,14 +94,19 @@ public class FlowerMiniGame : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         flower1.SetActive(true);
+        startTimer.text = "3";
+        startTimerObject.SetActive(true);
+        
 
         yield return new WaitForSeconds(1f);
 
         flower2.SetActive(true);
+        startTimer.text = "2";
 
         yield return new WaitForSeconds(1f);
 
         flower3.SetActive(true);
+        startTimer.text = "1";
 
         yield return new WaitForSeconds(1f);
 
@@ -108,39 +121,39 @@ public class FlowerMiniGame : MonoBehaviour
         //List<Color> playerList = new List<Color>{};
 
         playerList.Add(slot1.GetComponent<SlotCheck>().CheckSlotContents());
-            if (slot1.GetComponent<SlotCheck>().CheckSlotContents() == Color.magenta)
+            if (slot1.GetComponent<SlotCheck>().CheckSlotContents() == Color.red)
             {
-                Debug.Log("<color=magenta>This COLOR</color>");
+                Debug.Log("<color=red>This COLOR</color>");
             }
-            else if (slot1.GetComponent<SlotCheck>().CheckSlotContents() == Color.cyan)
+            else if (slot1.GetComponent<SlotCheck>().CheckSlotContents() == Color.green)
             {
-                Debug.Log("<color=cyan>This COLOR</color>");
+                Debug.Log("<color=green>This COLOR</color>");
             }
             else if (slot1.GetComponent<SlotCheck>().CheckSlotContents() == Color.blue)
             {
                 Debug.Log("<color=blue>This COLOR</color>");
             }
         playerList.Add(slot2.GetComponent<SlotCheck>().CheckSlotContents());
-            if (slot2.GetComponent<SlotCheck>().CheckSlotContents() == Color.magenta)
+            if (slot2.GetComponent<SlotCheck>().CheckSlotContents() == Color.red)
             {
-                Debug.Log("<color=magenta>This COLOR</color>");
+                Debug.Log("<color=red>This COLOR</color>");
             }
-            else if (slot2.GetComponent<SlotCheck>().CheckSlotContents() == Color.cyan)
+            else if (slot2.GetComponent<SlotCheck>().CheckSlotContents() == Color.green)
             {
-                Debug.Log("<color=cyan>This COLOR</color>");
+                Debug.Log("<color=green>This COLOR</color>");
             }
             else if (slot2.GetComponent<SlotCheck>().CheckSlotContents() == Color.blue)
             {
                 Debug.Log("<color=blue>This COLOR</color>");
             }
         playerList.Add(slot3.GetComponent<SlotCheck>().CheckSlotContents());
-            if (slot3.GetComponent<SlotCheck>().CheckSlotContents() == Color.magenta)
+            if (slot3.GetComponent<SlotCheck>().CheckSlotContents() == Color.red)
             {
-                Debug.Log("<color=magenta>This COLOR</color>");
+                Debug.Log("<color=red>This COLOR</color>");
             }
-            else if (slot3.GetComponent<SlotCheck>().CheckSlotContents() == Color.cyan)
+            else if (slot3.GetComponent<SlotCheck>().CheckSlotContents() == Color.green)
             {
-                Debug.Log("<color=cyan>This COLOR</color>");
+                Debug.Log("<color=green>This COLOR</color>");
             }
             else if (slot3.GetComponent<SlotCheck>().CheckSlotContents() == Color.blue)
             {
@@ -164,7 +177,11 @@ public class FlowerMiniGame : MonoBehaviour
         }
         Debug.Log("Player successfully replicated the sequence!");
 
+        // talk to mission control
         missionControl.flowerIsOkay = true;
+        missionControl.fountainPaused = false;
+        missionControl.pipesPaused = false;
+
         correct.Play();
         EndMinigame();
         return true; // Player input matches the game sequence
