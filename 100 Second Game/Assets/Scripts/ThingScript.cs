@@ -44,6 +44,9 @@ public class ThingScript : MonoBehaviour
     public PlayerHealth healthManager;
     public Timer timer;
 
+    public float minDuration;
+    public float maxDuration;
+
     //
 
     // Start is called before the first frame update
@@ -95,7 +98,7 @@ public class ThingScript : MonoBehaviour
         // after random number of seconds, switch to neutral state
         IEnumerator ExecuteStartTimer()
         {
-            yield return new WaitForSeconds(Random.Range(1.9f,3.9f));
+            yield return new WaitForSeconds(Random.Range(minDuration, maxDuration));
             //animator.SetTrigger("SwitchStates");
 
             yield return new WaitForSeconds(0.1f);

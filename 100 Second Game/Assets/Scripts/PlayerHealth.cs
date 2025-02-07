@@ -13,10 +13,13 @@ public class PlayerHealth : MonoBehaviour
 
     public int healthCount;
 
+    public ShakeBehaviour shake;
+
     // Start is called before the first frame update
     void Start()
     {
         healthCount = 3;
+        shake = Camera.main.GetComponent<ShakeBehaviour>();
     }
 
     // Update is called once per frame
@@ -35,6 +38,8 @@ public class PlayerHealth : MonoBehaviour
             healthOne.enabled = false;
             gameOver.SetActive(true);
             Time.timeScale = 0;
+            shake.shakeDuration = 0;
+
         }
     }
 }

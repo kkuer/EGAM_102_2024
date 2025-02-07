@@ -33,6 +33,8 @@ public class DangerThingScript : MonoBehaviour
 
     public Coroutine delayCoroutine;
 
+    public ShakeBehaviour shake;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,6 +48,8 @@ public class DangerThingScript : MonoBehaviour
         rb.AddForce(transform.up * speed);
         
         triggerCollider.enabled = false;
+
+        shake = Camera.main.GetComponent<ShakeBehaviour>();
     }
 
     // Update is called once per frame
@@ -79,6 +83,7 @@ public class DangerThingScript : MonoBehaviour
         if (isTouchedBad)
         {
             healthManager.healthCount -= 1;
+            shake.TriggerShake();
             //spriteRenderer.color = touched;
             Destroy(this.gameObject);
         }
