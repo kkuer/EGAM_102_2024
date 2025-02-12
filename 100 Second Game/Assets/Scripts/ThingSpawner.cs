@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ThingSpawner : MonoBehaviour
 {
+    public static ThingSpawner thingSpawnerInstance { get; private set; }
+
     public GameObject spawnPrefab;
     public GameObject spawnPrefab2;
 
@@ -22,6 +24,12 @@ public class ThingSpawner : MonoBehaviour
 
     public List<GameObject> shapePrefabList;
 
+    public List<GameObject> powerupsList;
+    public bool powerupSpawnable = true;
+
+    public List<GameObject> activeTriangles;
+    public List<GameObject> activeThings;
+
     public bool triangleSpawnStarted;
 
     public AudioSource spawnSound;
@@ -29,11 +37,22 @@ public class ThingSpawner : MonoBehaviour
     //public float thing;
 
     // Start is called before the first frame update
-
+    void Awake()
+    {
+        if (thingSpawnerInstance == null)
+        {
+            thingSpawnerInstance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     void Start()
     {
         spawnSquareCoroutine = StartCoroutine(SpawnCoroutine());
         triangleSpawnStarted = false;
+        powerupSpawnable = true;
     }
 
     IEnumerator SpawnCoroutine()
@@ -84,6 +103,8 @@ public class ThingSpawner : MonoBehaviour
             //spawnSound.Play();
             GameObject newObject = Instantiate(spawnPrefab);
             newObject.transform.position = newPosition;
+
+            activeThings.Add(newObject);
 
             if (i == spawnAmount -1)
             {
@@ -146,12 +167,36 @@ public class ThingSpawner : MonoBehaviour
             GameObject newObject = Instantiate(spawnPrefab2);
             newObject.transform.position = newPosition;
 
+            activeTriangles.Add(newObject);
+
             yield return new WaitForSeconds(4f);
         }
     }
 
+    public IEnumerator spawnPowerup()
+    {
+        yield return new WaitForSeconds(Random.Range(10, 20));
+
+        Vector2 originPoint = spawnOrigin.position;
+
+        Vector2 randomOffset = Vector2.zero;
+        randomOffset.x = Random.Range(-spawnArea.x, spawnArea.x);
+        randomOffset.y = Random.Range(-spawnArea.y, spawnArea.y);
+
+        Vector2 newPosition = originPoint + randomOffset;
+
+        GameObject newPowerup = Instantiate(powerupsList[Random.Range(0, powerupsList.Count)], newPosition, Quaternion.identity);
+        powerupSpawnable = true;
+    }
+
     private void Update()
     {
+        if (powerupSpawnable)
+        {
+            powerupSpawnable = false;
+            StartCoroutine(spawnPowerup());
+        }
+
         if (timer.hasWon == true)
         {
             StopAllCoroutines();

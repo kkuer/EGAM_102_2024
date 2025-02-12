@@ -15,6 +15,8 @@ public class PlayerHealth : MonoBehaviour
 
     public ShakeBehaviour shake;
 
+    public bool powerupReady = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,5 +43,24 @@ public class PlayerHealth : MonoBehaviour
             shake.shakeDuration = 0;
 
         }
+    }
+
+    public void applyPowerupHex()
+    {
+        powerupReady = false;
+        //handle powerup logic
+        powerupReady = true;
+    }
+    public void applyPowerupEnemy()
+    {
+        powerupReady = false;
+        if (ThingSpawner.thingSpawnerInstance != null)
+        {
+            foreach (GameObject triangle in ThingSpawner.thingSpawnerInstance.activeTriangles)
+            {
+                Destroy(triangle);
+            }
+        }
+        powerupReady = true;
     }
 }
