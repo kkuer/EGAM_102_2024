@@ -17,11 +17,32 @@ public class PlayerHealth : MonoBehaviour
 
     public bool powerupReady = true;
 
+    public GameObject damageParticlesPrefab;
+    public GameObject explosionParticlesPrefab;
+    public GameObject resetParticlesPrefab;
+
+    public AudioSource SFX_HIT;
+    public AudioSource SFX_KILL;
+    public AudioSource SFX_RESET;
+
+    public GameObject flashWhite;
+    public GameObject flashRed;
+
+    public static PlayerHealth healthScript {  get; private set; }
+
     // Start is called before the first frame update
     void Start()
     {
         healthCount = 3;
         shake = Camera.main.GetComponent<ShakeBehaviour>();
+        if (healthScript == null)
+        {
+            healthScript = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     // Update is called once per frame
@@ -58,9 +79,48 @@ public class PlayerHealth : MonoBehaviour
         {
             foreach (GameObject triangle in ThingSpawner.thingSpawnerInstance.activeTriangles)
             {
-                Destroy(triangle);
+                if (triangle != null)
+                {
+                    damageGiven(triangle.transform.position);
+                    ThingSpawner.thingSpawnerInstance.activeThings.Remove(triangle);
+                    Destroy(triangle);
+                }
             }
         }
         powerupReady = true;
+    }
+
+    public void damageTaken(Vector3 particlesPos)
+    {
+        SFX_HIT.Play();
+        StartCoroutine(flashHitRed());
+        Instantiate(damageParticlesPrefab, particlesPos, Quaternion.identity);
+    }
+
+    public void damageGiven(Vector3 particlesPos)
+    {
+        SFX_KILL.Play();
+        StartCoroutine(flashHitWhite());
+        Instantiate(explosionParticlesPrefab, particlesPos, Quaternion.identity);
+    }
+
+    public void hexReset(Vector3 particlesPos)
+    {
+        SFX_RESET.Play();
+        Instantiate(resetParticlesPrefab, particlesPos, Quaternion.identity);
+    }
+
+    IEnumerator flashHitWhite()
+    {
+        flashWhite.SetActive(true);
+        yield return new WaitForSeconds(0.05f);
+        flashWhite.SetActive(false);
+    }
+
+    IEnumerator flashHitRed()
+    {
+        flashRed.SetActive(true);
+        yield return new WaitForSeconds(0.05f);
+        flashRed.SetActive(false);
     }
 }

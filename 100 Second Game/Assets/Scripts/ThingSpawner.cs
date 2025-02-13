@@ -175,7 +175,7 @@ public class ThingSpawner : MonoBehaviour
 
     public IEnumerator spawnPowerup()
     {
-        yield return new WaitForSeconds(Random.Range(10, 20));
+        yield return new WaitForSeconds(Random.Range(5, 10));
 
         Vector2 originPoint = spawnOrigin.position;
 
@@ -191,7 +191,7 @@ public class ThingSpawner : MonoBehaviour
 
     private void Update()
     {
-        if (powerupSpawnable)
+        if (powerupSpawnable && triangleSpawnStarted)
         {
             powerupSpawnable = false;
             StartCoroutine(spawnPowerup());

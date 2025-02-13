@@ -50,6 +50,8 @@ public class DangerThingScript : MonoBehaviour
         triggerCollider.enabled = false;
 
         shake = Camera.main.GetComponent<ShakeBehaviour>();
+
+        healthManager = PlayerHealth.healthScript;
     }
 
     // Update is called once per frame
@@ -90,7 +92,11 @@ public class DangerThingScript : MonoBehaviour
         if (isTouchedGood)
         {
             //spriteRenderer.color = touched;
-            Destroy(this.gameObject);
+            if (ThingSpawner.thingSpawnerInstance != null)
+            {
+                ThingSpawner.thingSpawnerInstance.activeThings.Remove(gameObject);
+                Destroy(this.gameObject);
+            }
         }
     }
 
@@ -99,10 +105,14 @@ public class DangerThingScript : MonoBehaviour
         if (col.gameObject.CompareTag("Player") && timer.hasWon == false)
         {
             isTouchedBad = true;
+            healthManager.damageTaken(col.gameObject.transform.position);
+            shake.TriggerShake();
         }
         if (col.gameObject.CompareTag("PlayerBlue"))
         {
             isTouchedGood = true;
+            healthManager.damageGiven(col.gameObject.transform.position);
+            shake.TriggerShake();
         }
     }
 

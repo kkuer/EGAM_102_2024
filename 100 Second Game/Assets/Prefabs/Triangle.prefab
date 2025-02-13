@@ -194,6 +194,9 @@ MonoBehaviour:
   touched: {r: 0.20754701, g: 0, b: 0, a: 0}
   healthManager: {fileID: 0}
   timer: {fileID: 0}
+  shake: {fileID: 0}
+  damageParticlesPrefab: {fileID: 8115552580314168260, guid: 8048a8b0f863d7f4ea8e81256eb00592, type: 3}
+  explosionParticlesPrefab: {fileID: 8115552580314168260, guid: 8048a8b0f863d7f4ea8e81256eb00592, type: 3}
 --- !u!50 &6302945913025807603
 Rigidbody2D:
   serializedVersion: 4

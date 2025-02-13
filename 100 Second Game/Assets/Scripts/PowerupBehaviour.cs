@@ -18,7 +18,7 @@ public class PowerupBehaviour : MonoBehaviour
     {
         shake = Camera.main.GetComponent<ShakeBehaviour>();
     }
-    private void OnCollisionEnter2D(Collision2D player)
+    private void OnTriggerEnter2D(Collider2D player)
     {
         Debug.Log("collided");
         PlayerHealth playerHealth = player.gameObject.GetComponentInParent<PlayerHealth>();

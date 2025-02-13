@@ -62,6 +62,9 @@ public class ThingScript : MonoBehaviour
 
         //Apply a force to push the asteroid foward
         rb.AddForce(transform.up * speed);
+
+        healthManager = PlayerHealth.healthScript;
+        //healthManager.hexReset(this.gameObject.transform.position);
     }
 
     // Update is called once per frame
@@ -169,7 +172,7 @@ public class ThingScript : MonoBehaviour
         {
             spriteRenderer.color = touchedColor;
             animator.SetTrigger("SwitchStates");
-
+            healthManager.hexReset(this.gameObject.transform.position);
             yield return new WaitForSeconds(1.5f);
             canSwitch = true;
             currentState = ThingStates.Good;
@@ -192,6 +195,7 @@ public class ThingScript : MonoBehaviour
         if (hasDied == false && timer.hasWon == false)
         {
             healthManager.healthCount -= 1;
+            healthManager.damageTaken(this.gameObject.transform.position);
             hasDied = true;
             Destroy(this);
         }
@@ -210,7 +214,6 @@ public class ThingScript : MonoBehaviour
         if (col.gameObject.CompareTag("Player"))
         {
             isTouched = true;
-            
         }
     }
 

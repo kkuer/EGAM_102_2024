@@ -19,6 +19,7 @@ public class StaticEnemy : MonoBehaviour
     {
         if (other.gameObject.tag == "Player" || other.gameObject.tag == "PlayerBlue")
         {
+            healthManager.damageTaken(other.gameObject.transform.position);
             healthManager.healthCount -= 1;
             shake.TriggerShake();
         }
