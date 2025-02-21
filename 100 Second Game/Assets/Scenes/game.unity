@@ -1521,7 +1521,7 @@ MonoBehaviour:
   timer: {fileID: 454468622}
   spawnOrigin: {fileID: 601088524}
   spawnArea: {x: 6, y: 4}
-  spawnAmount: 6
+  spawnAmount: 2
   boxSize: {x: 4, y: 4}
   shapePrefabList:
   - {fileID: 2913891207687991001, guid: bc93ffb7497e90f46a4736c5b0759ff5, type: 3}

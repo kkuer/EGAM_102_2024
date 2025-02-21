@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -45,6 +46,12 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
+    IEnumerator restartGame()
+    {
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -62,7 +69,7 @@ public class PlayerHealth : MonoBehaviour
             gameOver.SetActive(true);
             Time.timeScale = 0;
             shake.shakeDuration = 0;
-
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 
